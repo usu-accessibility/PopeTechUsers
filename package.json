@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon local.js"
+    "dev": "nodemon index.js",
+    "prod": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,6 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "aws-serverless-express": "^3.4.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
