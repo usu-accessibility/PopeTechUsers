@@ -42,6 +42,7 @@ app.post("/users", async (req, res) => {
     const { usersToAdd, usersToDelete, usersToMoveGroup, usersToUpdate } =
       createGroups(mondayUsers, popetechUsers);
 
+    // Loop to move users between groups
     for (const user of usersToMoveGroup) {
       const response = await monday.api(`
         mutation {
@@ -57,6 +58,7 @@ app.post("/users", async (req, res) => {
       }
     }
 
+    // Loop to update users from popetech data in monday
     for (const user of usersToUpdate) {
       const values = JSON.stringify(
         JSON.stringify({
@@ -81,6 +83,7 @@ app.post("/users", async (req, res) => {
       }
     }
 
+    // Loop to add users from popetech to monday
     for (const user of usersToAdd) {
       const values = JSON.stringify(
         JSON.stringify({
@@ -106,6 +109,7 @@ app.post("/users", async (req, res) => {
       }
     }
 
+    // Loop to delete users in monday
     for (const user of usersToDelete) {
       const response = await monday.api(`
         mutation {
