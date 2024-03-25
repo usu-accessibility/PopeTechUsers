@@ -1,6 +1,7 @@
 const { monday } = require("./utils");
 
 const getMondayUsers = async () => {
+  console.log("Fetching users from Monday.");
   const mondayUsersFull = await monday.api(`
   {
     boards(ids: [4260005974]) {
@@ -20,6 +21,11 @@ const getMondayUsers = async () => {
     }
   }
     `);
+
+  if (mondayUsersFull.errors) {
+    console.error(mondayUsersFull.errors);
+    throw new Error("Error fetching users.");
+  }
 
   let mondayUsers = [];
 
@@ -49,6 +55,7 @@ const getMondayUsers = async () => {
     mondayUsers.push(userToAdd);
   }
 
+  console.log("Finished fetching users from Monday.");
   return mondayUsers;
 };
 

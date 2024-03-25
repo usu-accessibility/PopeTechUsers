@@ -2,6 +2,7 @@ const dayjs = require("dayjs");
 const { popetech } = require("./utils");
 
 const getPopetechUsers = async () => {
+  console.log("Fetching users from Popetech.");
   const popeTechUsersAll = await popetech.get(
     "https://api.pope.tech/organizations/usu/users?limit=250&include_invited_users=true"
   );
@@ -24,6 +25,7 @@ const getPopetechUsers = async () => {
     });
   }
 
+  console.log("Finished fetching users from Popetech.");
   return popeTechUsers;
 };
 

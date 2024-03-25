@@ -52,7 +52,7 @@ app.post("/users", async (req, res) => {
         }
       `);
 
-      if (response.errors) {
+      if (response.error_code) {
         console.error(response);
         throw new Error("Error changing user groups.");
       }
@@ -64,7 +64,7 @@ app.post("/users", async (req, res) => {
         JSON.stringify({
           status: user.role,
           text: user.sso,
-          email: user.email,
+          email: { email: user.email, text: user.email },
           text8: user.group,
           date: user.lastSeen === "" ? null : user.lastSeen,
         })
@@ -77,7 +77,7 @@ app.post("/users", async (req, res) => {
         }
       `);
 
-      if (response.errors) {
+      if (response.error_code) {
         console.error(response);
         throw new Error("Error updating a user");
       }
@@ -89,7 +89,7 @@ app.post("/users", async (req, res) => {
         JSON.stringify({
           status: user.role,
           text: user.sso,
-          email: user.email,
+          email: { email: user.email, text: user.email },
           text8: user.group,
           date: user.lastSeen === "" ? null : user.lastSeen,
           status6: "Updated",
@@ -103,7 +103,7 @@ app.post("/users", async (req, res) => {
           }
       `);
 
-      if (response.errors) {
+      if (response.error_code) {
         console.error(response);
         throw new Error("Error adding a user");
       }
@@ -119,11 +119,19 @@ app.post("/users", async (req, res) => {
         }
       `);
 
-      if (response.errors) {
+      if (response.error_code) {
         console.error(response);
         throw new Error("Error deleting a user");
       }
     }
+
+    await monday.api(`
+    mutation {
+      change_simple_column_value(item_id: ${id}, board_id: 4260005974, column_id: "status6", value: "Updated") {
+        id
+      }
+    }
+    `);
 
     res.sendStatus(200);
   } catch (error) {
