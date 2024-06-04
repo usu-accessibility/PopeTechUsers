@@ -13,6 +13,7 @@ const popetech = axios.create({
 let limited = false;
 popetech.interceptors.request.use(async (config) => {
   if (limited) {
+    console.log("Throttling...");
     await throttle();
   }
   return config;
